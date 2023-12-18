@@ -1,0 +1,42 @@
+[
+	{
+		"file": "C:\\Users\\aslhu\\Desktop\\Dev\\Unreal\\Winter Break Proj\\WB2023\\Source\\WB2023\\Private\\TheAssetManager.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.37.32822\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\aslhu\\Desktop\\Dev\\Unreal\\Winter Break Proj\\WB2023\\.vscode\\compileCommands_Default\\WB2023.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.3\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\aslhu\\Desktop\\Dev\\Unreal\\Winter Break Proj\\WB2023\\Source\\WB2023\\Public\\TheAssetManager.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.37.32822\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\aslhu\\Desktop\\Dev\\Unreal\\Winter Break Proj\\WB2023\\.vscode\\compileCommands_Default\\WB2023.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.3\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\aslhu\\Desktop\\Dev\\Unreal\\Winter Break Proj\\WB2023\\Source\\WB2023\\WB2023.Build.cs",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.37.32822\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\aslhu\\Desktop\\Dev\\Unreal\\Winter Break Proj\\WB2023\\.vscode\\compileCommands_Default\\WB2023.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.3\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\aslhu\\Desktop\\Dev\\Unreal\\Winter Break Proj\\WB2023\\Source\\WB2023\\WB2023.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.37.32822\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\aslhu\\Desktop\\Dev\\Unreal\\Winter Break Proj\\WB2023\\.vscode\\compileCommands_Default\\WB2023.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.3\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\aslhu\\Desktop\\Dev\\Unreal\\Winter Break Proj\\WB2023\\Source\\WB2023\\WB2023.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.37.32822\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\aslhu\\Desktop\\Dev\\Unreal\\Winter Break Proj\\WB2023\\.vscode\\compileCommands_Default\\WB2023.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.3\\Engine\\Source"
+	}
+]
