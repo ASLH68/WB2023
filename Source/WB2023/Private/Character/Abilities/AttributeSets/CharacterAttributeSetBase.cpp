@@ -4,6 +4,12 @@
 #include "Character/Abilities/AttributeSets/CharacterAttributeSetBase.h"
 #include "Net/UnrealNetwork.h"
 
+
+void UCharacterAttributeSetBase::OnRep_CharacterLevel(const FGameplayAttributeData& OldLevel)
+{
+    GAMEPLAYATTRIBUTE_REPNOTIFY(UCharacterAttributeSetBase, CharacterLevel, OldLevel);
+}
+
 void UCharacterAttributeSetBase::OnRep_Health(const FGameplayAttributeData& OldHealth)
 {
     GAMEPLAYATTRIBUTE_REPNOTIFY(UCharacterAttributeSetBase, Health, OldHealth);
@@ -29,6 +35,7 @@ void UCharacterAttributeSetBase::GetLifetimeReplicatedProps(TArray<FLifetimeProp
 {
     Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
+    DOREPLIFETIME_CONDITION_NOTIFY(UCharacterAttributeSetBase, CharacterLevel, COND_None, REPNOTIFY_Always);
     DOREPLIFETIME_CONDITION_NOTIFY(UCharacterAttributeSetBase, Health, COND_None, REPNOTIFY_Always);
     DOREPLIFETIME_CONDITION_NOTIFY(UCharacterAttributeSetBase, MaxHealth, COND_None, REPNOTIFY_Always);
     DOREPLIFETIME_CONDITION_NOTIFY(UCharacterAttributeSetBase, Mana, COND_None, REPNOTIFY_Always);

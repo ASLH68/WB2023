@@ -24,6 +24,10 @@ class WB2023_API UCharacterAttributeSetBase : public UAttributeSet
 	GENERATED_BODY()
 
 public:
+	
+	UPROPERTY(BlueprintReadOnly, Category = "Level", ReplicatedUsing = OnRep_CharacterLevel)
+	FGameplayAttributeData CharacterLevel;
+	ATTRIBUTE_ACCESSORS(UCharacterAttributeSetBase, CharacterLevel)
 
 	UPROPERTY(BlueprintReadOnly, Category = "Health", ReplicatedUsing = OnRep_Health)
 	FGameplayAttributeData Health;
@@ -48,6 +52,9 @@ public:
 	FGameplayAttributeData Damage;
 	ATTRIBUTE_ACCESSORS(UCharacterAttributeSetBase, Damage)
 
+
+	UFUNCTION()
+	virtual void OnRep_CharacterLevel(const FGameplayAttributeData& OldLevel);
 	UFUNCTION()
 	virtual void OnRep_Health(const FGameplayAttributeData& OldHealth);
 	UFUNCTION()
