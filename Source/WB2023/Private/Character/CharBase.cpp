@@ -73,7 +73,7 @@ int32 ACharBase::GetCharacterLevel() const
 {
 	if (AttributeSetBase.IsValid())
 	{
-		return static_cast<int32>(AttributeSetBase->GetCharacterLevel());
+		return static_cast<int32>(AttributeSetBase->GetLevel());
 	}
 
 	return 0.0f;

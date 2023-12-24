@@ -26,8 +26,8 @@ class WB2023_API UCharacterAttributeSetBase : public UAttributeSet
 public:
 	
 	UPROPERTY(BlueprintReadOnly, Category = "Level", ReplicatedUsing = OnRep_CharacterLevel)
-	FGameplayAttributeData CharacterLevel;
-	ATTRIBUTE_ACCESSORS(UCharacterAttributeSetBase, CharacterLevel)
+	FGameplayAttributeData Level;
+	ATTRIBUTE_ACCESSORS(UCharacterAttributeSetBase, Level)
 
 	UPROPERTY(BlueprintReadOnly, Category = "Health", ReplicatedUsing = OnRep_Health)
 	FGameplayAttributeData Health;

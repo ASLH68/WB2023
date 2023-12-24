@@ -68,6 +68,7 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+	// Keep track of ability system component & attribute set. Point to the ones in player state
 	TWeakObjectPtr<class UCharacterAbilitySystemComponent> AbilitySystemComponent;
 	TWeakObjectPtr<class UCharacterAttributeSetBase> AttributeSetBase;
 
