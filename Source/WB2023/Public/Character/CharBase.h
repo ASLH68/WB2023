@@ -57,8 +57,6 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Character|Attribute")
 	float GetMaxMana() const;
 
-
-
 	virtual void Die();
 
 	UFUNCTION(BlueprintCallable, Category = "Character")
