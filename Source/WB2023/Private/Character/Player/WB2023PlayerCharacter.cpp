@@ -12,6 +12,10 @@
 #include "Player/WB2023PlayerController.h"
 #include "Character/Abilities/CharacterAbilitySystemComponent.h"
 #include "Kismet/KismetMathLibrary.h"
+#include "Components/InputComponent.h"
+#include "EnhancedInputComponent.h"
+#include "EnhancedInputSubsystems.h"
+#include "InputActionValue.h"
 
 AWB2023PlayerCharacter::AWB2023PlayerCharacter(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
 {
@@ -39,13 +43,15 @@ void AWB2023PlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerIn
 {
     Super::SetupPlayerInputComponent(PlayerInputComponent);
 
-    PlayerInputComponent->BindAxis("MoveForward", this, &AWB2023PlayerCharacter::MoveForward);
-    PlayerInputComponent->BindAxis("IA_MoveRight", this, &AWB2023PlayerCharacter::MoveRight);
-    PlayerInputComponent->BindAxis("IA_LookUp", this, &AWB2023PlayerCharacter::LookUp);
-    PlayerInputComponent->BindAxis("IA_LookUpRate", this, &AWB2023PlayerCharacter::LookUpRate);
-    PlayerInputComponent->BindAxis("IA_Turn", this, &AWB2023PlayerCharacter::Turn);
-    PlayerInputComponent->BindAxis("IA_TurnRate", this, &AWB2023PlayerCharacter::TurnRate);
-    // Bind player input to the ability system component
+    if (UEnhancedInputComponent* EnhancedInputComponent = CastChecked<UEnhancedInputComponent>(PlayerInputComponent))
+    {
+        EnhancedInputComponent->BindAction(IA_MoveForward, ETriggerEvent::Triggered, this, & AWB2023PlayerCharacter::MoveForward);
+        EnhancedInputComponent->BindAction(IA_MoveRight, ETriggerEvent::Triggered, this, &AWB2023PlayerCharacter::MoveRight);
+        EnhancedInputComponent->BindAction(IA_TurnRate, ETriggerEvent::Triggered, this, &AWB2023PlayerCharacter::TurnRate);
+        EnhancedInputComponent->BindAction(IA_Turn, ETriggerEvent::Triggered, this, &AWB2023PlayerCharacter::Turn);
+        EnhancedInputComponent->BindAction(IA_LookUpRate, ETriggerEvent::Triggered, this, &AWB2023PlayerCharacter::LookUpRate);
+        EnhancedInputComponent->BindAction(IA_LookUp, ETriggerEvent::Triggered, this, &AWB2023PlayerCharacter::LookUp);
+    }
     BindASCInput();
 }
 
@@ -89,48 +95,76 @@ void AWB2023PlayerCharacter::BeginPlay()
 
     StartingCameraBoomArmLength = CameraBoom->TargetArmLength;
     StartingCameraBoomLocation = CameraBoom->GetRelativeLocation();
-}
 
-void AWB2023PlayerCharacter::LookUp(float Value)
-{
-    if (IsAlive())
+    if (APlayerController* PlayerController = Cast<APlayerController>(GetController()))
     {
-        AddControllerPitchInput(Value);
+        if (UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PlayerController->GetLocalPlayer()))
+        {
+            Subsystem->AddMappingContext(CharacterMappingContext, 0);
+        }
     }
 }
 
-void AWB2023PlayerCharacter::LookUpRate(float Value)
+void AWB2023PlayerCharacter::LookUp(const FInputActionValue& Instance)
 {
     if (IsAlive())
     {
-        AddControllerPitchInput(Value * BaseLookUpRate * GetWorld()->DeltaTimeSeconds);
+        float FloatValue = Instance.Get<float>();
+        AddControllerPitchInput(FloatValue);
     }
 }
 
-void AWB2023PlayerCharacter::Turn(float Value)
+void AWB2023PlayerCharacter::LookUpRate(const FInputActionValue& Instance)
 {
     if (IsAlive())
     {
-        AddControllerYawInput(Value);
+        float FloatValue = Instance.Get<float>();
+        AddControllerPitchInput(FloatValue * BaseLookUpRate * GetWorld()->DeltaTimeSeconds);
     }
 }
 
-void AWB2023PlayerCharacter::TurnRate(float Value)
+void AWB2023PlayerCharacter::Turn(const FInputActionValue& Instance)
 {
     if (IsAlive())
     {
-        AddControllerPitchInput(Value * BaseTurnRate * GetWorld()->DeltaTimeSeconds);
+        float FloatValue = Instance.Get<float>();
+        AddControllerYawInput(FloatValue);
     }
 }
 
-void AWB2023PlayerCharacter::MoveForward(float Value)
+void AWB2023PlayerCharacter::TurnRate(const FInputActionValue& Instance)
 {
-    AddMovementInput(UKismetMathLibrary::GetForwardVector(FRotator(0, GetControlRotation().Yaw, 0)), Value);
+    if (IsAlive())
+    {
+        float FloatValue = Instance.Get<float>();
+        AddControllerPitchInput(FloatValue * BaseTurnRate * GetWorld()->DeltaTimeSeconds);
+    }
 }
 
-void AWB2023PlayerCharacter::MoveRight(float Value)
+void AWB2023PlayerCharacter::MoveForward(const FInputActionValue& Instance)
 {
-    AddMovementInput(UKismetMathLibrary::GetRightVector(FRotator(0, GetControlRotation().Yaw, 0)), Value);
+    if (IsAlive())
+    {
+        float FloatValue = Instance.Get<float>();
+        UE_LOG(LogTemp, Warning, TEXT("Text, %f"), FloatValue);
+        FVector Forward = GetActorForwardVector();
+        AddMovementInput(Forward, FloatValue);
+    }
+    else
+    {
+        UE_LOG(LogTemp, Warning, TEXT("Dead"));
+    }
+}
+
+void AWB2023PlayerCharacter::MoveRight(const FInputActionValue& Instance)
+{
+    if (IsAlive())
+    {
+        float FloatValue = Instance.Get<float>();
+
+        FVector Right = GetActorRightVector();
+        AddMovementInput(UKismetMathLibrary::GetRightVector(FRotator(0, GetControlRotation().Yaw, 0)), FloatValue);
+    }
 }
 
 void AWB2023PlayerCharacter::OnRep_PlayerState()
@@ -142,7 +176,6 @@ void AWB2023PlayerCharacter::OnRep_PlayerState()
     {
         InitializeStartingValues(PS);
         BindASCInput();
-        InitializeAttributes();
     }  
 }
 
@@ -150,10 +183,11 @@ void AWB2023PlayerCharacter::InitializeStartingValues(AWB2023PlayerState* PS)
 {
     // Set the ASC on the server, clients use OnRep_PlayerState
     AbilitySystemComponent = Cast<UCharacterAbilitySystemComponent>(PS->GetAbilitySystemComponent());
-    PS->GetAbilitySystemComponent()->InitAbilityActorInfo(PS, this);
+    AbilitySystemComponent->InitAbilityActorInfo(PS, this);
     
     // Sets the attributeSetBase for convenience attribute functions
     AttributeSetBase = PS->GetAttributeSetBase();
+    InitializeAttributes();
     AbilitySystemComponent->SetTagMapCount(DeadTag, 0);
     SetHealth(GetMaxHealth());
     SetMana(GetMaxMana());
@@ -165,7 +199,7 @@ void AWB2023PlayerCharacter::BindASCInput()
     {
         // Tells the ability system component to map confirm target to the enum, with the rest casting to the charabilityid
         AbilitySystemComponent->BindAbilityActivationToInputComponent(InputComponent, FGameplayAbilityInputBinds(FString("ConfirmTarget"), 
-            FString("CancelTarget"), FString("CharAbilityID"), static_cast<int32>(CharAbilityID::Confirm), static_cast<int32>(CharAbilityID::Cancel)));
+            FString("CancelTarget"), FString("/Script/WB2023.CharAbilityID"), static_cast<int32>(CharAbilityID::Confirm), static_cast<int32>(CharAbilityID::Cancel)));
     
         ASCInputBound = true;
     }

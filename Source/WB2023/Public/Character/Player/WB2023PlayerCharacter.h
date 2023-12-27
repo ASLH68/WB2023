@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "Character/CharBase.h"
 #include "Player/WB2023PlayerState.h"
+#include "InputActionValue.h"
 #include "WB2023PlayerCharacter.generated.h"
 
 /**
@@ -34,7 +35,6 @@ public:
 	FVector GetStartingCameraBoomLocation();
 
 protected:
-
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "WB2023|Camera")
 	float BaseTurnRate = 45.0f;
 
@@ -53,23 +53,44 @@ protected:
 	UPROPERTY(BlueprintReadOnly, VisibleAnywhere, Category = "WB2023|Camera")
 	class UCameraComponent* FollowCamera;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "WB2023|Input")
+	class UInputMappingContext* CharacterMappingContext;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "WB2023|Input")
+	class UInputAction* IA_MoveForward;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "WB2023|Input")
+	class UInputAction* IA_MoveRight;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "WB2023|Input")
+	class UInputAction* IA_TurnRate;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "WB2023|Input")
+	class UInputAction* IA_Turn;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "WB2023|Input")
+	class UInputAction* IA_LookUpRate;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "WB2023|Input")
+	class UInputAction* IA_LookUp;
+
 	bool ASCInputBound = false;
 
 	FGameplayTag DeadTag;
 
 	virtual void BeginPlay() override;
 
-	void LookUp(float Value);
+	void LookUp(const FInputActionValue& Value);
 
-	void LookUpRate(float Value);
+	void LookUpRate(const FInputActionValue& Value);
 
-	void Turn(float Value);
+	void Turn(const FInputActionValue& Value);
 
-	void TurnRate(float Value);
+	void TurnRate(const FInputActionValue& Value);
 
-	void MoveForward(float Value);
+	void MoveForward(const FInputActionValue& Value);
 
-	void MoveRight(float Value);
+	void MoveRight(const FInputActionValue& Value);
 
 	virtual void OnRep_PlayerState() override;
 
