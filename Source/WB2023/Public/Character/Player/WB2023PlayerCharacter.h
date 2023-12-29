@@ -19,6 +19,10 @@ class WB2023_API AWB2023PlayerCharacter : public ACharBase
 public:
 	AWB2023PlayerCharacter(const class FObjectInitializer& ObjectInitializer);
 
+	/// <summary>
+	/// Sets up the enhanced input system and binds actions
+	/// </summary>
+	/// <param name="PlayerInputComponent"></param>
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	virtual void PossessedBy(AController* NewController) override;

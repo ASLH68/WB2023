@@ -45,12 +45,12 @@ void AWB2023PlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerIn
 
     if (UEnhancedInputComponent* EnhancedInputComponent = CastChecked<UEnhancedInputComponent>(PlayerInputComponent))
     {
-        EnhancedInputComponent->BindAction(IA_MoveForward, ETriggerEvent::Triggered, this, & AWB2023PlayerCharacter::MoveForward);
+        /*EnhancedInputComponent->BindAction(IA_MoveForward, ETriggerEvent::Triggered, this, & AWB2023PlayerCharacter::MoveForward);
         EnhancedInputComponent->BindAction(IA_MoveRight, ETriggerEvent::Triggered, this, &AWB2023PlayerCharacter::MoveRight);
         EnhancedInputComponent->BindAction(IA_TurnRate, ETriggerEvent::Triggered, this, &AWB2023PlayerCharacter::TurnRate);
         EnhancedInputComponent->BindAction(IA_Turn, ETriggerEvent::Triggered, this, &AWB2023PlayerCharacter::Turn);
         EnhancedInputComponent->BindAction(IA_LookUpRate, ETriggerEvent::Triggered, this, &AWB2023PlayerCharacter::LookUpRate);
-        EnhancedInputComponent->BindAction(IA_LookUp, ETriggerEvent::Triggered, this, &AWB2023PlayerCharacter::LookUp);
+        EnhancedInputComponent->BindAction(IA_LookUp, ETriggerEvent::Triggered, this, &AWB2023PlayerCharacter::LookUp);*/
     }
     BindASCInput();
 }
