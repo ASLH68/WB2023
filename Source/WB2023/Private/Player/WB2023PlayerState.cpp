@@ -86,6 +86,9 @@ void AWB2023PlayerState::BeginPlay()
 void AWB2023PlayerState::HealthChanged(const FOnAttributeChangeData& Data)
 {
     UE_LOG(LogTemp, Warning, TEXT("Health Changed!"));
+
+    FString NewHealth = FString::SanitizeFloat(GetHealth());
+    GEngine->AddOnScreenDebugMessage(-1, 1.0, FColor::Red, *NewHealth);
 }
 
 void AWB2023PlayerState::MaxHealthChanged(const FOnAttributeChangeData& Data)
@@ -96,6 +99,9 @@ void AWB2023PlayerState::MaxHealthChanged(const FOnAttributeChangeData& Data)
 void AWB2023PlayerState::ManaChanged(const FOnAttributeChangeData& Data)
 {
     UE_LOG(LogTemp, Warning, TEXT("Mana Changed!"));
+
+    FString NewMana = FString::SanitizeFloat(GetMana());
+    GEngine->AddOnScreenDebugMessage(-1, 1.0, FColor::Blue, *NewMana);
 }
 
 void AWB2023PlayerState::MaxManaChanged(const FOnAttributeChangeData& Data)

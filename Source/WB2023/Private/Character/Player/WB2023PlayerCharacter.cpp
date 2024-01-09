@@ -52,7 +52,7 @@ void AWB2023PlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerIn
         EnhancedInputComponent->BindAction(IA_LookUpRate, ETriggerEvent::Triggered, this, &AWB2023PlayerCharacter::LookUpRate);
         EnhancedInputComponent->BindAction(IA_LookUp, ETriggerEvent::Triggered, this, &AWB2023PlayerCharacter::LookUp);*/
     }
-    BindASCInput();
+    //BindASCInput();
 }
 
 void AWB2023PlayerCharacter::PossessedBy(AController* NewController)
@@ -198,6 +198,7 @@ void AWB2023PlayerCharacter::BindASCInput()
     if (!ASCInputBound && AbilitySystemComponent.IsValid() && IsValid(InputComponent))
     {
         // Tells the ability system component to map confirm target to the enum, with the rest casting to the charabilityid
+        // Associates the enum with the input mappings
         AbilitySystemComponent->BindAbilityActivationToInputComponent(InputComponent, FGameplayAbilityInputBinds(FString("ConfirmTarget"), 
             FString("CancelTarget"), FString("/Script/WB2023.CharAbilityID"), static_cast<int32>(CharAbilityID::Confirm), static_cast<int32>(CharAbilityID::Cancel)));
     

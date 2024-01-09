@@ -159,7 +159,6 @@ void ACharBase::Die()
 void ACharBase::BeginPlay()
 {
 	Super::BeginPlay();
-	
 }
 
 void ACharBase::AddCharacterAbilities()
@@ -171,7 +170,7 @@ void ACharBase::AddCharacterAbilities()
 	}
 	for (TSubclassOf<UCharacterGameplayAbility>& StartupAbility : CharacterAbilities)
 	{
-		// Adds ability to the system component
+		// Adds ability to the system component and adds ability ID to the action mapping
 		AbilitySystemComponent->GiveAbility(FGameplayAbilitySpec(StartupAbility, GetAbilityLevel(StartupAbility.GetDefaultObject()->AbilityID), static_cast<int32>(StartupAbility.GetDefaultObject()->AbilityInputID), this));
 	}
 
